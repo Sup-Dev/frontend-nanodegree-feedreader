@@ -38,6 +38,7 @@ $(function() {
         it('URL defined', function() {
             var i, len, url;
             
+            // check every object in `allFeeds` for 'url'
             for (i=0, len=allFeeds.length; i<len; i++) {
                 url = allFeeds[i].url;
                 expect(url).toBeDefined();
@@ -52,6 +53,7 @@ $(function() {
         it('name defined', function() {
             var i, len, name;
             
+            // check every object in `allFeeds` for 'name'
             for (i=0, len=allFeeds.length; i<len; i++) {
                 name = allFeeds[i].name;
                 expect(name).toBeDefined();
@@ -78,14 +80,16 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-            it('menu visibility on icon click', function() {
+        it('menu visibility on icon click', function() {
                 
-                $('.menu-icon-link').trigger('click');
-                expect($('body').hasClass("menu-hidden")).toBe(false);
-                
-                $('.menu-icon-link').trigger('click');
-                expect($('body').hasClass("menu-hidden")).toBe(true);
-            })
+            // trigger the first click event on 'menu-icon-link'
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass("menu-hidden")).toBe(false);
+
+            // trigger the second click event on 'menu-icon-link'
+            $('.menu-icon-link').trigger('click');
+            expect($('body').hasClass("menu-hidden")).toBe(true);
+        });
     });
     
     /* TODO: Write a new test suite named "Initial Entries" */
@@ -104,8 +108,11 @@ $(function() {
         });
         
         it('.entry element in .feed container after loadFeed called', function(done) {
+            // get the html for the first entry in feed
             var entry = $(".feed .entry")[0];
             //console.log(entry);
+            
+            // check if html has be generated
             expect(entry).toBeDefined();
             expect(entry.length).not.toBe(0);
             done();
@@ -121,7 +128,7 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
         beforeEach(function(done) {
-            $('.feed') .empty();
+            // get old feeds            
             old_feed = $('.feed').html();
             //console.log(old_item);
             
@@ -132,8 +139,11 @@ $(function() {
         
         it('content changes when new feed loaded', function(done) {
             loadFeed(1, function() {
+                // get new feeds
                 new_feed = $('.feed').html();
                 //console.log(new_item);
+                
+                // compare old and new feeds
                 expect(old_feed).not.toEqual(new_feed);
                 done();
             });
