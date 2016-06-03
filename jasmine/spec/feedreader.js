@@ -9,6 +9,10 @@
  * to ensure they don't run until the DOM is ready.
  */
 $(function() {
+    /* Global variables */
+    var old_feed, new_feed;
+    
+    
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
@@ -109,9 +113,30 @@ $(function() {
     });
         
     /* TODO: Write a new test suite named "New Feed Selection"
+    */
+    describe('New Feed Selection', function() {
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        beforeEach(function(done) {
+            $('.feed') .empty();
+            old_feed = $('.feed').html();
+            //console.log(old_item);
+            
+            loadFeed(0, function() {
+               done() ;
+            });
+        });
+        
+        it('content changes when new feed loaded', function(done) {
+            loadFeed(1, function() {
+                new_feed = $('.feed').html();
+                //console.log(new_item);
+                expect(old_feed).not.toEqual(new_feed);
+                done();
+            });
+        });
+    });
 }());
